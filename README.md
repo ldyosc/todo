@@ -26,6 +26,7 @@ Includes optional GraphQL integration - needs more work
 - Client-side form validation and error handling
 
 - Deployed version not able to write on Vercel so the next step is to change the database to MongoDB
+- Vercel (and most serverless hosts) have a read-only filesystem at runtime, so changes to tasks.json won’t work after deployment
 
 - example query:
   query {
