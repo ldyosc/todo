@@ -8,14 +8,12 @@ export default function HomePage() {
   const [newTask, setNewTask] = useState('');
   const [error, setError] = useState('');
 
-  // Fetch tasks on load
-  const loadTasks = async () => {
-    const res = await fetch('/api/tasks');
-    const data = await res.json();
-    setTasks(data);
-  };
   useEffect(() => {
-    loadTasks();
+    (async () => {
+      const res = await fetch('/api/tasks');
+      const data = await res.json();
+      setTasks(data);
+    })();
   }, []);
 
   // Add task
