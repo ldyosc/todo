@@ -25,6 +25,8 @@ Includes optional GraphQL integration - needs more work
 - API Routes and optional GraphQL API
 - Client-side form validation and error handling
 
+- Deployed version not able to add a task but it runs on local haha (classic) working on it.. 
+
 - example query:
   query {
   tasks {
