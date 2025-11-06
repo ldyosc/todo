@@ -33,3 +33,6 @@ Includes optional GraphQL integration - needs more work
   done
   }
   }
+
+example query /api/graphql
+
