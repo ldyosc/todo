@@ -24,3 +24,12 @@ Includes optional GraphQL integration - needs more work
 - Create, read, update, and delete tasks
 - API Routes and optional GraphQL API
 - Client-side form validation and error handling
+
+- example query:
+  query {
+  tasks {
+  id
+  title
+  done
+  }
+  }
