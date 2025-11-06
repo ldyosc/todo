@@ -1,22 +1,32 @@
 import { Task } from '@/types/task';
-import fs from 'fs';
+import { promises as fs } from 'fs';
 import { NextResponse } from 'next/server';
 import path from 'path';
 
 const filePath = path.join(process.cwd(), 'data', 'tasks.json');
 
-// Helper to read/write JSON
-function readTasks(): Task[] {
-  const data = fs.readFileSync(filePath, 'utf-8');
-  return JSON.parse(data);
+export async function readTasks(): Promise<Task[]> {
+  try {
+    const data = await fs.readFile(filePath, 'utf-8'); // async read
+    return JSON.parse(data) as Task[];
+  } catch (err) {
+    console.error('Error reading tasks:', err);
+    return []; // return empty array if file is missing or corrupt
+  }
 }
-function writeTasks(tasks: Task[]) {
-  fs.writeFileSync(filePath, JSON.stringify(tasks, null, 2));
+
+export async function writeTasks(tasks: Task[]): Promise<void> {
+  try {
+    await fs.writeFile(filePath, JSON.stringify(tasks, null, 2), 'utf-8'); // async write
+  } catch (err) {
+    console.error('Error writing tasks:', err);
+    throw err; // propagate error
+  }
 }
 
 // GET all tasks
 export async function GET() {
-  const tasks = readTasks();
+  const tasks = await readTasks();
   return NextResponse.json(tasks);
 }
 
@@ -27,10 +37,10 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Title is required' }, { status: 400 });
   }
 
-  const tasks = readTasks();
+  const tasks = await readTasks();
   const newTask: Task = { id: Date.now().toString(), title, done: false };
   tasks.push(newTask);
-  writeTasks(tasks);
+  await writeTasks(tasks);
 
   return NextResponse.json(newTask, { status: 201 });
 }
@@ -38,7 +48,7 @@ export async function POST(req: Request) {
 // PUT update existing task with toggle done
 export async function PUT(req: Request) {
   const { id, done, title } = await req.json();
-  const tasks = readTasks();
+  const tasks = await readTasks();
   const index = tasks.findIndex((t) => t.id === id);
 
   if (index === -1) {
@@ -48,16 +58,16 @@ export async function PUT(req: Request) {
   if (title !== undefined) tasks[index].title = title;
   if (done !== undefined) tasks[index].done = done;
 
-  writeTasks(tasks);
+  await writeTasks(tasks);
   return NextResponse.json(tasks[index]);
 }
 
 // DELETE task
 export async function DELETE(req: Request) {
   const { id } = await req.json();
-  const tasks = readTasks();
+  const tasks = await readTasks();
   const filtered = tasks.filter((t) => t.id !== id);
-  writeTasks(filtered);
+  await writeTasks(filtered);
 
   return NextResponse.json({ message: 'Deleted successfully' });
 }
