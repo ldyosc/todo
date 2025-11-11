@@ -16,7 +16,7 @@ bun dev
 
 # 📝 Next.js Full-Stack Task Manager
 
-A simple CRUD todo manager built with Next.js 16, TypeScript, and JSON-based storage.
+A simple CRUD todo manager built with Next.js, TypeScript, and JSON-based storage.
 Includes optional GraphQL integration - needs more work
 
 ## Features
@@ -25,7 +25,7 @@ Includes optional GraphQL integration - needs more work
 - API Routes and optional GraphQL API
 - Client-side form validation and error handling
 
-- Deployed version not able to write on Vercel so the next step is to change the database to MongoDB
+- Deployed version not able to write on Vercel so the next step is to change the database
 - Vercel (and most serverless hosts) have a read-only filesystem at runtime, so changes to tasks.json won’t work after deployment
 
 - example query:

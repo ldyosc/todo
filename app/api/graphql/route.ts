@@ -1,7 +1,6 @@
 import { Task } from '@/types/task';
 import fs from 'fs';
 import { createSchema, createYoga } from 'graphql-yoga';
-import { NextResponse } from 'next/server';
 import path from 'path';
 
 const filePath = path.join(process.cwd(), 'data', 'tasks.json');
@@ -34,7 +33,7 @@ const yoga = createYoga({
     `,
     resolvers: {
       Query: {
-        tasks: () => readTasks(),
+        tasks: () => readTasks(), // resolve every time
       },
       Mutation: {
         addTask: (_: any, { title }: { title: string }) => {

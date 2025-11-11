@@ -1,12 +1,27 @@
 'use client';
 import TaskItem from '@/components/TaskItem';
 import { Task } from '@/types/task';
+// import { gql, request } from 'graphql-request';
 import { useEffect, useState } from 'react';
+
+// const GET_TASKS = gql`
+//   query {
+//     tasks {
+//       id
+//       title
+//       done
+//     }
+//   }
+// `;
 
 export default function HomePage() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTask, setNewTask] = useState('');
   const [error, setError] = useState('');
+
+  // useEffect(() => {
+  //   request('/api/graphql', GET_TASKS).then((data) => setTasks(data.tasks));
+  // }, []);
 
   useEffect(() => {
     (async () => {
